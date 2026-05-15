@@ -55,6 +55,40 @@ def encrypt_data(data_bytes):
     padded = pad(data_bytes, AES.block_size)
     return cipher.encrypt(padded)
 
+# ==================== NEW: DIRECT JWT FROM UID/PASSWORD USING API ====================
+
+def get_jwt_from_uid_password_api(uid, password):
+    """Get JWT directly using the star-jwt-gen API"""
+    url = f"http://star-jwt-gen.vercel.app/token?uid={uid}&password={password}"
+    try:
+        print(f"[UID/PASS] Calling JWT API: {url}")
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        print(f"[UID/PASS] API Response: {data}")
+        
+        # Check for token in response
+        if "token" in data:
+            jwt_token = data["token"]
+            # Decode JWT to get info
+            try:
+                decoded = jwt.decode(jwt_token, options={"verify_signature": False})
+                account_id = str(decoded.get("account_id"))
+                nickname = decoded.get("nickname")
+                region = decoded.get("lock_region") or decoded.get("region") or DEFAULT_REGION
+                print(f"[UID/PASS] Success! UID: {account_id}, Name: {nickname}, Region: {region}")
+                return jwt_token, account_id, nickname, region
+            except Exception as e:
+                print(f"[UID/PASS] JWT decode error: {e}")
+                return jwt_token, uid, "Unknown", DEFAULT_REGION
+        else:
+            error_msg = data.get("error", "No token in response")
+            print(f"[UID/PASS] API Error: {error_msg}")
+            return None, None, None, None
+    except Exception as e:
+        print(f"[UID/PASS] Request error: {e}")
+        return None, None, None, None
+
 # ==================== ACCESS TOKEN -> JWT (Rizer's Method) ====================
 
 def get_jwt_from_access_token(access_token):
@@ -182,9 +216,9 @@ REGION_ALIASES = {
 
 REGION_MAP = {
     "IND": {"update_url": "https://client.ind.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "ME": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "BD": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "PK": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
+    "ME": {"update_url": "https://clientbp.ggblueshark.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
+    "BD": {"update_url": "https://clientbp.ggwhitehawk.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
+    "PK": {"update_url": "https://clientbp.ggblueshark.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
     "SG": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
     "BR": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
     "NA": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
@@ -288,62 +322,76 @@ def combined_bio_upload():
     bio = request.args.get("bio") or request.form.get("bio")
     jwt_token = request.args.get("jwt") or request.form.get("jwt")
     uid = request.args.get("uid") or request.form.get("uid")
-    password = request.args.get("pass") or request.form.get("pass")
+    password = request.args.get("pass") or request.args.get("password") or request.form.get("pass") or request.form.get("password")
     access_token = request.args.get("access") or request.args.get("access_token") or request.form.get("access") or request.form.get("access_token")
 
     if not bio:
-        return jsonify({"status": "❌ Missing bio"}), 400
+        return jsonify({"status": "❌ Missing bio", "error": "bio parameter required"}), 400
 
     final_jwt = None
     jwt_info = None
     login_method = "Unknown"
 
-    # Direct JWT
+    # 1. Direct JWT
     if jwt_token:
         login_method = "Direct JWT"
         final_jwt = jwt_token
         jwt_info = decode_jwt_full(final_jwt)
+        print(f"[Direct JWT] Using provided JWT")
 
-    # UID + Password (Guest Login + Major Login)
+    # 2. UID + Password (Using API)
     elif uid and password:
-        login_method = "UID/Pass Login"
-        payload = {
-            'uid': uid, 'password': password, 'response_type': "token",
-            'client_type': "2", 'client_secret': "2ee44819e9b4598845141067b281621874d0d5d7af9d8f7e00c1e54715b7d1e3",
-            'client_id': "100067"
-        }
-        headers = {'User-Agent': "GarenaMSDK/4.0.19P9(SM-M526B ;Android 13;pt;BR;)"}
+        login_method = "UID/Pass via API"
+        print(f"[UID/Pass] Attempting login for UID: {uid}")
+        final_jwt, account_uid, name, region = get_jwt_from_uid_password_api(uid, password)
         
-        try:
-            resp = requests.post(OAUTH_URL, data=payload, headers=headers, verify=False)
-            data = resp.json()
-            acc_token = data.get('access_token')
-            open_id = data.get('open_id')
-            
-            if acc_token and open_id:
-                # Try all regions for major login
-                for region_code in REGION_MAP.keys():
-                    _, major_url = get_region_urls(region_code)
-                    # Here you'd call major login with acc_token and open_id
-                    pass
-        except:
-            pass
+        if final_jwt:
+            jwt_info = {
+                "uid": account_uid,
+                "name": name,
+                "region": region
+            }
+            print(f"[UID/Pass] Successfully obtained JWT")
+        else:
+            print(f"[UID/Pass] Failed to get JWT")
+            return jsonify({
+                "status": "❌ Authentication Failed",
+                "error": "Invalid UID/Password or API error",
+                "login_method": login_method
+            }), 401
 
-    # Access Token -> JWT (Rizer's Method - Direct Major Login)
+    # 3. Access Token -> JWT (Major Login)
     elif access_token:
         login_method = "Access Token -> JWT (Major Login)"
+        print(f"[Access Token] Attempting conversion")
         final_jwt, account_uid, region = get_jwt_from_access_token(access_token)
         
         if final_jwt:
             jwt_info = decode_jwt_full(final_jwt)
             if not jwt_info:
                 jwt_info = {"uid": account_uid, "region": region}
+            print(f"[Access Token] Successfully obtained JWT")
+        else:
+            print(f"[Access Token] Failed to convert")
+            return jsonify({
+                "status": "❌ Access Token Conversion Failed",
+                "error": "Could not convert access token to JWT",
+                "login_method": login_method
+            }), 401
 
     else:
-        return jsonify({"status": "❌ Provide JWT, UID/Pass, or Access Token"}), 400
+        return jsonify({
+            "status": "❌ Missing Credentials",
+            "error": "Provide JWT, UID/Pass, or Access Token",
+            "example": {
+                "with_uid_pass": "/bio?bio=Hello&uid=123456789&pass=yourpassword",
+                "with_jwt": "/bio?bio=Hello&jwt=your_jwt_token",
+                "with_access": "/bio?bio=Hello&access=your_access_token"
+            }
+        }), 400
 
     if not final_jwt:
-        return jsonify({"status": "❌ JWT Generation Failed", "code": 500}), 500
+        return jsonify({"status": "❌ JWT Generation Failed", "error": "Could not generate valid JWT"}), 500
 
     # Upload bio
     jwt_region = jwt_info.get("region") if jwt_info else DEFAULT_REGION
@@ -352,19 +400,51 @@ def combined_bio_upload():
     result = upload_bio_request(final_jwt, bio, update_url)
 
     response_data = {
+        "success": result["status"] == "✅ Success",
         "login_method": login_method,
         "status": result["status"],
-        "code": result["code"],
+        "http_code": result["code"],
         "bio": bio,
         "uid": jwt_info.get("uid") if jwt_info else None,
         "name": jwt_info.get("name") if jwt_info else None,
         "region_detected": jwt_region,
         "region_used": mapped_region,
-        "generated_jwt": final_jwt,
-        "server_response": result["server_response"]
+        "generated_jwt": final_jwt[:50] + "..." if final_jwt and len(final_jwt) > 50 else final_jwt,
+        "server_response": result["server_response"][:200] if result["server_response"] else "Empty"
     }
 
     return jsonify(response_data)
 
+@app.route("/", methods=["GET"])
+def home():
+    return jsonify({
+        "name": "FreeFire Bio Upload API",
+        "version": "1.0",
+        "endpoints": {
+            "bio": "/bio?bio=text&uid=UID&pass=PASSWORD",
+            "methods": ["GET", "POST"],
+            "parameters": {
+                "bio": "Bio text to upload (required)",
+                "uid": "FreeFire UID (with password)",
+                "pass": "FreeFire password (with uid)",
+                "jwt": "Direct JWT token",
+                "access": "Access token"
+            }
+        },
+        "examples": {
+            "uid_pass": "/bio?bio=Hello World&uid=4569404695&pass=RAGHAVLIKESBOT_RAGHAV_2THCG",
+            "jwt": "/bio?bio=Hello World&jwt=eyJhbGciOiJIUzI1NiIs...",
+            "access": "/bio?bio=Hello World&access=660b275ac9fc3f12b65ed9008344cb74..."
+        }
+    })
+
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    print("=" * 50)
+    print("FreeFire Bio Upload API Started")
+    print("=" * 50)
+    print("Available endpoints:")
+    print("  GET  / - API Info")
+    print("  POST /bio - Upload bio")
+    print("  GET  /bio?bio=text&uid=xxx&pass=xxx - Upload bio")
+    print("=" * 50)
+    app.run(host="0.0.0.0", port=5000, debug=True)
