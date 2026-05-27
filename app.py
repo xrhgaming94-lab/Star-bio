@@ -58,8 +58,8 @@ def encrypt_data(data_bytes):
 # ==================== NEW: DIRECT JWT FROM UID/PASSWORD USING API ====================
 
 def get_jwt_from_uid_password_api(uid, password):
-    """Get JWT directly using the star-jwt-gen API"""
-    url = f"http://star-jwt-api1.lovable.app/token?uid={uid}&password={password}"
+    """Get JWT directly using the star-jwt-api1 API"""
+    url = f"https://star-jwt-api1.lovable.app/api/public/token?uid={uid}&password={password}"
     try:
         print(f"[UID/PASS] Calling JWT API: {url}")
         response = requests.get(url, timeout=10)
