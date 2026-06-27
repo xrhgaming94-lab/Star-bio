@@ -1,12 +1,9 @@
-#LONG BIO API FIXED BY STAR 
-#ALL FEATURES FIXED DONE AND NAME DCODER
-#ALL REGION SUPPORTED @STAR_RDP TG ID @STAR_METHDOE CHANNEL
 from flask import Flask, request, jsonify, make_response
 import requests
 import binascii
 import jwt
-import json
 import urllib3
+import json
 import base64
 from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 from Crypto.Cipher import AES
@@ -28,6 +25,195 @@ app = Flask(__name__)
 
 DEFAULT_REGION = "IND"
 
+# ==================== PROTOBUF DEFINITIONS (Rizer's Code) ====================
+
+_sym_db = _symbol_database.Default()
+
+# --- MajorLoginReq protobuf ---
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x13MajorLoginReq.proto\"\xfa\n\n\nMajorLogin\x12\x12\n\nevent_time\x18\x03 \x01(\t\x12\x11\n\tgame_name\x18\x04 \x01(\t\x12\x13\n\x0bplatform_id\x18\x05 \x01(\x05\x12\x16\n\x0e\x63lient_version\x18\x07 \x01(\t\x12\x17\n\x0fsystem_software\x18\x08 \x01(\t\x12\x17\n\x0fsystem_hardware\x18\t \x01(\t\x12\x18\n\x10telecom_operator\x18\n \x01(\t\x12\x14\n\x0cnetwork_type\x18\x0b \x01(\t\x12\x14\n\x0cscreen_width\x18\x0c \x01(\r\x12\x15\n\rscreen_height\x18\r \x01(\r\x12\x12\n\nscreen_dpi\x18\x0e \x01(\t\x12\x19\n\x11processor_details\x18\x0f \x01(\t\x12\x0e\n\x06memory\x18\x10 \x01(\r\x12\x14\n\x0cgpu_renderer\x18\x11 \x01(\t\x12\x13\n\x0bgpu_version\x18\x12 \x01(\t\x12\x18\n\x10unique_device_id\x18\x13 \x01(\t\x12\x11\n\tclient_ip\x18\x14 \x01(\t\x12\x10\n\x08language\x18\x15 \x01(\t\x12\x0f\n\x07open_id\x18\x16 \x01(\t\x12\x14\n\x0copen_id_type\x18\x17 \x01(\t\x12\x13\n\x0b\x64\x65vice_type\x18\x18 \x01(\t\x12\'\n\x10memory_available\x18\x19 \x01(\x0b\x32\r.GameSecurity\x12\x14\n\x0c\x61\x63\x63\x65ss_token\x18\x1d \x01(\t\x12\x17\n\x0fplatform_sdk_id\x18\x1e \x01(\x05\x12\x1a\n\x12network_operator_a\x18) \x01(\t\x12\x16\n\x0enetwork_type_a\x18* \x01(\t\x12\x1c\n\x14\x63lient_using_version\x18\x39 \x01(\t\x12\x1e\n\x16\x65xternal_storage_total\x18< \x01(\x05\x12\"\n\x1a\x65xternal_storage_available\x18= \x01(\x05\x12\x1e\n\x16internal_storage_total\x18> \x01(\x05\x12\"\n\x1ainternal_storage_available\x18? \x01(\x05\x12#\n\x1bgame_disk_storage_available\x18@ \x01(\x05\x12\x1f\n\x17game_disk_storage_total\x18\x41 \x01(\x05\x12%\n\x1d\x65xternal_sdcard_avail_storage\x18\x42 \x01(\x05\x12%\n\x1d\x65xternal_sdcard_total_storage\x18\x43 \x01(\x05\x12\x10\n\x08login_by\x18I \x01(\x05\x12\x14\n\x0clibrary_path\x18J \x01(\t\x12\x12\n\nreg_avatar\x18L \x01(\x05\x12\x15\n\rlibrary_token\x18M \x01(\t\x12\x14\n\x0c\x63hannel_type\x18N \x01(\x05\x12\x10\n\x08\x63pu_type\x18O \x01(\x05\x12\x18\n\x10\x63pu_architecture\x18Q \x01(\t\x12\x1b\n\x13\x63lient_version_code\x18S \x01(\t\x12\x14\n\x0cgraphics_api\x18V \x01(\t\x12\x1d\n\x15supported_astc_bitset\x18W \x01(\r\x12\x1a\n\x12login_open_id_type\x18X \x01(\x05\x12\x18\n\x10\x61nalytics_detail\x18Y \x01(\x0c\x12\x14\n\x0cloading_time\x18\\ \x01(\r\x12\x17\n\x0frelease_channel\x18] \x01(\t\x12\x12\n\nextra_info\x18^ \x01(\t\x12 \n\x18\x61ndroid_engine_init_flag\x18_ \x01(\r\x12\x0f\n\x07if_push\x18\x61 \x01(\x05\x12\x0e\n\x06is_vpn\x18\x62 \x01(\x05\x12\x1c\n\x14origin_platform_type\x18\x63 \x01(\t\x12\x1d\n\x15primary_platform_type\x18\x64 \x01(\t\"5\n\x0cGameSecurity\x12\x0f\n\x07version\x18\x06 \x01(\x05\x12\x14\n\x0chidden_value\x18\x08 \x01(\x04\x62\x06proto3')
+
+_globals = globals()
+_builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'MajorLoginReq_pb2', _globals)
+MajorLogin = _globals['MajorLogin']
+GameSecurity = _globals['GameSecurity']
+
+# --- MajorLoginRes protobuf ---
+DESCRIPTOR2 = _descriptor_pool.Default().AddSerializedFile(b'\n\x13MajorLoginRes.proto\"|\n\rMajorLoginRes\x12\x13\n\x0b\x61\x63\x63ount_uid\x18\x01 \x01(\x04\x12\x0e\n\x06region\x18\x02 \x01(\t\x12\r\n\x05token\x18\x08 \x01(\t\x12\x0b\n\x03url\x18\n \x01(\t\x12\x11\n\ttimestamp\x18\x15 \x01(\x03\x12\x0b\n\x03key\x18\x16 \x01(\x0c\x12\n\n\x02iv\x18\x17 \x01(\x0c\x62\x06proto3')
+
+_builder.BuildMessageAndEnumDescriptors(DESCRIPTOR2, _globals)
+_builder.BuildTopDescriptorsAndMessages(DESCRIPTOR2, 'MajorLoginRes_pb2', _globals)
+MajorLoginRes = _globals['MajorLoginRes']
+
+# ==================== AES CONSTANTS ====================
+
+AES_KEY = bytes([89, 103, 38, 116, 99, 37, 68, 69, 117, 104, 54, 37, 90, 99, 94, 56])
+AES_IV = bytes([54, 111, 121, 90, 68, 114, 50, 50, 69, 51, 121, 99, 104, 106, 77, 37])
+
+def encrypt_data(data_bytes):
+    cipher = AES.new(AES_KEY, AES.MODE_CBC, AES_IV)
+    padded = pad(data_bytes, AES.block_size)
+    return cipher.encrypt(padded)
+
+# ==================== NEW: DIRECT JWT FROM UID/PASSWORD USING API ====================
+
+def get_jwt_from_uid_password_api(uid, password):
+    """Get JWT directly using the star-jwt-gen API"""
+    url = f"https://star-jwt-api1.lovable.app/api/public/token?uid={uid}&password={password}"
+    try:
+        print(f"[UID/PASS] Calling JWT API: {url}")
+        response = requests.get(url, timeout=10)
+        response.raise_for_status()
+        data = response.json()
+        print(f"[UID/PASS] API Response: {data}")
+        
+        # Check for token in response
+        if "token" in data:
+            jwt_token = data["token"]
+            # Decode JWT to get info
+            try:
+                decoded = jwt.decode(jwt_token, options={"verify_signature": False})
+                account_id = str(decoded.get("account_id"))
+                nickname = decoded.get("nickname")
+                region = decoded.get("lock_region") or decoded.get("region") or DEFAULT_REGION
+                print(f"[UID/PASS] Success! UID: {account_id}, Name: {nickname}, Region: {region}")
+                return jwt_token, account_id, nickname, region
+            except Exception as e:
+                print(f"[UID/PASS] JWT decode error: {e}")
+                return jwt_token, uid, "Unknown", DEFAULT_REGION
+        else:
+            error_msg = data.get("error", "No token in response")
+            print(f"[UID/PASS] API Error: {error_msg}")
+            return None, None, None, None
+    except Exception as e:
+        print(f"[UID/PASS] Request error: {e}")
+        return None, None, None, None
+
+# ==================== ACCESS TOKEN -> JWT (Rizer's Method) ====================
+
+def get_jwt_from_access_token(access_token):
+    """Convert access token to JWT using Major Login"""
+    try:
+        # Step 1: Get open_id from token inspect endpoint
+        inspect_url = f"https://100067.connect.garena.com/oauth/token/inspect?token={access_token}"
+        insp_resp = requests.get(inspect_url, timeout=10)
+        
+        if insp_resp.status_code != 200:
+            return None, None, None
+        
+        insp_data = insp_resp.json()
+        open_id = insp_data.get('open_id')
+        
+        if not open_id:
+            return None, None, None
+        
+        # Step 2: Try different platform types
+        platform_types = [2, 3, 4, 6, 8]
+        
+        for pt in platform_types:
+            try:
+                # Build Major Login request
+                major = MajorLogin()
+                major.event_time = "2025-03-23 12:00:00"
+                major.game_name = "free fire"
+                major.platform_id = 1
+                major.client_version = "1.126.2"
+                major.system_software = "Android OS 9 / API-28 (PQ3B.190801.10101846/G9650ZHU2ARC6)"
+                major.system_hardware = "Handheld"
+                major.telecom_operator = "Verizon"
+                major.network_type = "WIFI"
+                major.screen_width = 1920
+                major.screen_height = 1080
+                major.screen_dpi = "280"
+                major.processor_details = "ARM64 FP ASIMD AES VMH | 2865 | 4"
+                major.memory = 3003
+                major.gpu_renderer = "Adreno (TM) 640"
+                major.gpu_version = "OpenGL ES 3.1 v1.46"
+                major.unique_device_id = "Google|34a7dcdf-a7d5-4cb6-8d7e-3b0e448a0c57"
+                major.client_ip = "223.191.51.89"
+                major.language = "en"
+                major.open_id = open_id
+                major.open_id_type = "4"
+                major.device_type = "Handheld"
+                major.memory_available.version = 55
+                major.memory_available.hidden_value = 81
+                major.access_token = access_token
+                major.platform_sdk_id = 1
+                major.network_operator_a = "Verizon"
+                major.network_type_a = "WIFI"
+                major.client_using_version = "7428b253defc164018c604a1ebbfebdf"
+                major.external_storage_total = 36235
+                major.external_storage_available = 31335
+                major.internal_storage_total = 2519
+                major.internal_storage_available = 703
+                major.game_disk_storage_available = 25010
+                major.game_disk_storage_total = 26628
+                major.external_sdcard_avail_storage = 32992
+                major.external_sdcard_total_storage = 36235
+                major.login_by = 3
+                major.library_path = "/data/app/com.dts.freefireth-YPKM8jHEwAJlhpmhDhv5MQ==/lib/arm64"
+                major.reg_avatar = 1
+                major.library_token = "5b892aaabd688e571f688053118a162b|/data/app/com.dts.freefireth-YPKM8jHEwAJlhpmhDhv5MQ==/base.apk"
+                major.channel_type = 3
+                major.cpu_type = 2
+                major.cpu_architecture = "64"
+                major.client_version_code = "2019118695"
+                major.graphics_api = "OpenGLES2"
+                major.supported_astc_bitset = 16383
+                major.login_open_id_type = 4
+                major.analytics_detail = b"FwQVTgUPX1UaUllDDwcWCRBpWA0FUgsvA1snWlBaO1kFYg=="
+                major.loading_time = 13564
+                major.release_channel = "android"
+                major.extra_info = "KqsHTymw5/5GB23YGniUYN2/q47GATrq7eFeRatf0NkwLKEMQ0PK5BKEk72dPflAxUlEBir6Vtey83XqF593qsl8hwY="
+                major.android_engine_init_flag = 110009
+                major.if_push = 1
+                major.is_vpn = 1
+                major.origin_platform_type = str(pt)
+                major.primary_platform_type = str(pt)
+                
+                payload = major.SerializeToString()
+                encrypted_payload = encrypt_data(payload)
+                
+                url = "https://loginbp.ggblueshark.com/MajorLogin"
+                headers = {
+                    "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 11; ASUS_Z01QD Build/PI)",
+                    "Connection": "Keep-Alive",
+                    "Accept-Encoding": "gzip",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                    "X-Unity-Version": "2018.4.11f1",
+                    "X-GA": "v1 1",
+                    "ReleaseVersion": "OB54"
+                }
+                
+                resp = requests.post(url, data=encrypted_payload, headers=headers, verify=False, timeout=10)
+                
+                if resp.status_code == 200:
+                    major_res = MajorLoginRes()
+                    major_res.ParseFromString(resp.content)
+                    if major_res.token:
+                        return major_res.token, str(major_res.account_uid), major_res.region
+            except Exception as e:
+                continue
+        
+        return None, None, None
+        
+    except Exception as e:
+        return None, None, None
+
+# ==================== REGION CONFIGURATION ====================
+
+MIDDLE_EAST_REGIONS = [
+    "EUROPE", "MIDDLEEAST", "MIDDLE_EAST", "ME", "DUBAI", "UAE", "SAUDI",
+    "SAUDIARABIA", "KSA", "EGYPT", "EG", "TURKEY", "TR", "IRAQ", "IQ",
+    "QATAR", "QA", "KUWAIT", "KW", "OMAN", "OM", "BAHRAIN", "BH", "PAKISTAN", "PK"
+]
+
+REGION_ALIASES = {
+    "EUROPE": "ME", "MIDDLEEAST": "ME", "DUBAI": "ME", "UAE": "ME",
+    "SAUDI": "ME", "EGYPT": "ME", "TURKEY": "ME", "PAKISTAN": "ME", "PK": "ME",
+    "ASIA": "SG", "SOUTHAMERICA": "BR", "NORTH_AMERICA": "NA"
+}
+
 REGION_MAP = {
     "IND": {"update_url": "https://client.ind.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
     "ME": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
@@ -44,69 +230,9 @@ REGION_MAP = {
     "SAC": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
     "NA": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
 }
-#ALL REGION ADDED BY STAR
+
+FREEFIRE_VERSION = "OB53"
 OAUTH_URL = "https://100067.connect.garena.com/oauth/guest/token/grant"
-FREEFIRE_VERSION = "OB54"
-
-KEY = bytes([89, 103, 38, 116, 99, 37, 68, 69, 117, 104, 54, 37, 90, 99, 94, 56])
-IV = bytes([54, 111, 121, 90, 68, 114, 50, 50, 69, 51, 121, 99, 104, 106, 77, 37])
-
-# ============== NICKNAME DECODER ==============
-# Replaced incorrect key with the fixed secret key for accurate UTF-8 decoding
-FF_XOR_KEY = b"1e5898ccb8dfdd921f9bdea848768b64a201"
-
-def decode_ff_nickname(encoded: str) -> str:
-    try:
-        raw = base64.b64decode(encoded)
-        dec = bytearray()
-        for i, b in enumerate(raw):
-            dec.append(b ^ FF_XOR_KEY[i % len(FF_XOR_KEY)])
-        return dec.decode('utf-8', errors='replace')
-    except Exception as e:
-        print(f"[NICK DECODE ERROR] {e}")
-        return f"[DECODE_ERROR: {e}]"
-
-def decode_jwt_with_nickname(token: str):
-    try:
-        if not token:
-            print("[JWT DECODE] Token is empty")
-            return None, None, None
-            
-        parts = token.split('.')
-        if len(parts) != 3:
-            print(f"[JWT DECODE] Invalid format: {len(parts)} parts")
-            return None, None, None
-        
-        payload_b64 = parts[1]
-        payload_b64 += '=' * ((4 - len(payload_b64) % 4) % 4)
-        
-        try:
-            payload_json = base64.urlsafe_b64decode(payload_b64).decode('utf-8')
-            payload = json.loads(payload_json)
-            print(f"[JWT DECODE] Successfully decoded payload")
-        except Exception as e:
-            print(f"[JWT DECODE] Failed to decode base64: {e}")
-            return None, None, None
-        
-        uid = payload.get("account_id")
-        region = payload.get("lock_region")
-        
-        raw_nickname = payload.get("nickname", "")
-        if raw_nickname:
-            name = decode_ff_nickname(raw_nickname)
-            print(f"[JWT DECODE] Nickname decoded: {name}")
-        else:
-            name = None
-            print("[JWT DECODE] No nickname found in payload")
-        
-        print(f"[JWT DECODE] UID: {uid}, Region: {region}")
-        return str(uid) if uid else None, name, region
-        
-    except Exception as e:
-        print(f"[JWT DECODE] Critical error: {e}")
-        import traceback
-        traceback.print_exc()
-        return None, None, None
 
 BIO_HEADERS = {
     "Expect": "100-continue",
@@ -114,232 +240,60 @@ BIO_HEADERS = {
     "X-GA": "v1 1",
     "ReleaseVersion": FREEFIRE_VERSION,
     "Content-Type": "application/x-www-form-urlencoded",
-    "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 11; SM-A305F Build/RP1A.200720.012)",
+    "User-Agent": "Dalvik/2.1.0 (Linux; Android)",
     "Connection": "Keep-Alive",
     "Accept-Encoding": "gzip",
-}
-
-LOGIN_HEADERS = {
-    "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 9; ASUS_Z01QD Build/PI)",
-    "Connection": "Keep-Alive",
-    "Accept-Encoding": "gzip",
-    "Content-Type": "application/octet-stream",
-    "Expect": "100-continue",
-    "X-Unity-Version": "2018.4.11f1",
-    "X-GA": "v1 1",
-    "ReleaseVersion": FREEFIRE_VERSION
 }
 
 _sym_db = _symbol_database.Default()
+
 DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(
-    b'\n\ndata.proto\"\xbb\x01\n\x04\x44\x61ta\x12\x0f\n\x07\x66ield_2\x18\x02 \x01(\x05\x12\x1e\n\x07\x66ield_5\x18\x05 \x01(\x0b\x32\r.EmptyMessage\x12\x1e\n\x07\x66ield_6\x18\x06 \x01(\x0b\x32\r.EmptyMessage\x12\x0f\n\x07\x66ield_8\x18\x08 \x01(\t\x12\x0f\n\x07\x66ield_9\x18\t \x01(\x05\x12\x1f\n\x08\x66ield_11\x18\x0b \x01(\x0b\x32\r.EmptyMessage\x12\x1f\n\x08\x66ield_12\x18\x0c \x01(\x0b\x32\r.EmptyMessage\"\x0e\n\x0c\x45mptyMessageb\x06proto3'
+b'\n\ndata.proto"\xbb\x01\n\x04\x44\x61ta\x12\x0f\n\x07\x66ield_2\x18\x02 \x01(\x05\x12\x1e\n\x07\x66ield_5\x18\x05 \x01(\x0b\x32\r.EmptyMessage\x12\x1e\n\x07\x66ield_6\x18\x06 \x01(\x0b\x32\r.EmptyMessage\x12\x0f\n\x07\x66ield_8\x18\x08 \x01(\t\x12\x0f\n\x07\x66ield_9\x18\t \x01(\x05\x12\x1f\n\x08\x66ield_11\x18\x0b \x01(\x0b\x32\r.EmptyMessage\x12\x1f\n\x08\x66ield_12\x18\x0c \x01(\x0b\x32\r.EmptyMessage"\x0e\n\x0c\x45mptyMessageb\x06proto3'
 )
+
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
 _builder.BuildTopDescriptorsAndMessages(DESCRIPTOR, 'data1_pb2', _globals)
+
 BioData = _sym_db.GetSymbol('Data')
 EmptyMessage = _sym_db.GetSymbol('EmptyMessage')
 
-def encrypt_data(data_bytes):
-    cipher = AES.new(KEY, AES.MODE_CBC, IV)
-    padded = pad(data_bytes, AES.block_size)
-    return cipher.encrypt(padded)
 
-# ============== APP.PY VALIDATION LOGIC ==============
-def validate_and_get_openid_from_token(access_token):
-    """App.py style - Direct token inspect"""
+def decode_jwt_full(token):
     try:
-        inspect_url = f"https://100067.connect.garena.com/oauth/token/inspect?token={access_token}"
-        headers = {
-            "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 11; ASUS_Z01QD Build/PI)",
-            "Connection": "Keep-Alive",
-            "Accept-Encoding": "gzip"
+        decoded = jwt.decode(token, options={"verify_signature": False})
+        return {
+            "uid": str(decoded.get("account_id")),
+            "name": decoded.get("nickname"),
+            "region": (decoded.get("lock_region") or decoded.get("region") or "").upper(),
+            "country": decoded.get("country_code")
         }
-        resp = requests.get(inspect_url, headers=headers, verify=False, timeout=10)
-        
-        print(f"[TOKEN INSPECT] Status: {resp.status_code}")
-        print(f"[TOKEN INSPECT] Response: {resp.text}")
-        
-        if resp.status_code == 200:
-            data = resp.json()
-            open_id = data.get('open_id')
-            if open_id:
-                print(f"[TOKEN INSPECT] Success! OpenID: {open_id}")
-                return open_id, True
-            else:
-                print("[TOKEN INSPECT] No open_id in response")
-                return None, False
-        else:
-            print(f"[TOKEN INSPECT] Failed with status {resp.status_code}")
-            return None, False
-            
-    except Exception as e:
-        print(f"[TOKEN INSPECT] Error: {e}")
-        return None, False
-
-# ============== REWARD API ==============
-def get_name_region_from_reward(access_token):
-    try:
-        uid_url = "https://prod-api.reward.ff.garena.com/redemption/api/auth/inspect_token/"
-        uid_headers ={
-            "authority": "prod-api.reward.ff.garena.com",
-            "method": "GET",
-            "path": "/redemption/api/auth/inspect_token/",
-            "scheme": "https",
-            "accept": "application/json, text/plain, */*",
-            "accept-encoding": "gzip, deflate, br",
-            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
-            "access-token": access_token,
-            "cookie": "_gid=GA1.2.444482899.1724033242; _ga_XB5PSHEQB4=GS1.1.1724040177.1.1.1724040732.0.0.0; token_session=cb73a97aaef2f1c7fd138757dc28a08f92904b1062e66c; _ga_KE3SY7MRSD=GS1.1.1724041788.0.0.1724041788.0; _ga_RF9R6YT614=GS1.1.1724041788.0.0.1724041788.0; _ga=GA1.1.1843180339.1724033241; apple_state_key=817771465df611ef8ab00ac8aa985783; _ga_G8QGMJPWWV=GS1.1.1724049483.1.1.1724049880.0.0; datadome=HBTqAUPVsbBJaOLirZCUkN3rXjf4gRnrZcNlw2WXTg7bn083SPey8X~ffVwr7qhtg8154634Ee9qq4bCkizBuiMZ3Qtqyf3Isxmsz6GTH_b6LMCKWF4Uea_HSPk;",
-            "origin": "https://reward.ff.garena.com",
-            "referer": "https://reward.ff.garena.com/",
-            "sec-ch-ua": '"Not.A/Brand";v="99", "Chromium";v="124"',
-            "sec-ch-ua-mobile": "?0",
-            "sec-ch-ua-platform": '"Android"',
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-site",
-            "user-agent": "Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-        }
-        uid_res = requests.get(uid_url, headers=uid_headers, verify=False)
-        uid_data = uid_res.json()
-        print(f"[REWARD] Response: {uid_data}")
-        return uid_data.get("uid"), uid_data.get("name"), uid_data.get("region")
-    except Exception as e:
-        print(f"[REWARD] Error: {e}")
-        return None, None, None
-
-# ============== SHOP2GAME ==============
-def get_openid_from_shop2game(uid):
-    if not uid: return None
-    try:
-        openid_url = "https://topup.pk/api/auth/player_id_login"
-        openid_headers = { 
-            "Accept": "application/json, text/plain, */*",
-            "Accept-Encoding": "gzip, deflate, br, zstd",
-            "Accept-Language": "en-MM,en-US;q=0.9,en;q=0.8",
-            "Content-Type": "application/json",
-            "Origin": "https://topup.pk",
-            "Referer": "https://topup.pk/",
-            "sec-ch-ua": '"Not)A;Brand";v="8", "Chromium";v="138", "Android WebView";v="138"',
-            "sec-ch-ua-mobile": "?1",
-            "sec-ch-ua-platform": '"Android"',
-            "Sec-Fetch-Dest": "empty",
-            "Sec-Fetch-Mode": "cors",
-            "Sec-Fetch-Site": "same-origin",
-            "User-Agent": "Mozilla/5.0 (Linux; Android 15; RMX5070 Build/UKQ1.231108.001) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.7204.157 Mobile Safari/537.36",
-            "X-Requested-With": "mark.via.gp",
-            "Cookie": "source=mb; region=PK; mspid2=13c49fb51ece78886ebf7108a4907756; _fbp=fb.1.1753985808817.794945392376454660; language=en; datadome=WQaG3HalUB3PsGoSXY3TdcrSQextsSFwkOp1cqZtJ7Ax4YkiERHUgkgHlEAIccQO~w8dzTGM70D9SzaH7vymmEqOrVeX5pIsPVE22Uf3TDu6W3WG7j36ulnTg2DltRO7; session_key=hq02g63z3zjcumm76mafcooitj7nc79y",
-        }
-        payload = {"app_id": 100067, "login_id": str(uid)}
-        res = requests.post(openid_url, headers=openid_headers, json=payload, verify=False)
-        data = res.json()
-        print(f"[SHOP2GAME] OpenID response: {data}")
-        return data.get("open_id")
-    except Exception as e:
-        print(f"[SHOP2GAME] Error: {e}")
+    except:
         return None
 
-# ============== MAJOR LOGIN ==============
-def perform_major_login(access_token, open_id, major_login_url):
-    platforms = [2, 3, 4, 6, 8]  # App.py platform types
-    for platform_type in platforms:
-        try:
-            game_data = my_pb2.GameData()
-            game_data.timestamp = "2024-12-05 18:15:32"
-            game_data.game_name = "free fire"
-            game_data.game_version = 1
-            game_data.version_code = "1.126.2"
-            game_data.os_info = "Android OS 9 / API-28 (PI/rel.cjw.20220518.114133)"
-            game_data.device_type = "Handheld"
-            game_data.network_provider = "Verizon Wireless"
-            game_data.connection_type = "WIFI"
-            game_data.screen_width = 1280
-            game_data.screen_height = 960
-            game_data.dpi = "240"
-            game_data.cpu_info = "ARMv7 VFPv3 NEON VMH | 2400 | 4"
-            game_data.total_ram = 5951
-            game_data.gpu_name = "Adreno (TM) 640"
-            game_data.gpu_version = "OpenGL ES 3.0"
-            game_data.user_id = "Google|74b585a9-0268-4ad3-8f36-ef41d2e53610"
-            game_data.ip_address = "172.190.111.97"
-            game_data.language = "en"
-            game_data.open_id = open_id
-            game_data.access_token = access_token
-            game_data.platform_type = platform_type
-            game_data.field_99 = str(platform_type)
-            game_data.field_100 = str(platform_type)
+def map_region(jwt_region):
+    if not jwt_region:
+        return DEFAULT_REGION
+    jwt_region = jwt_region.upper()
+    if jwt_region in REGION_MAP:
+        return jwt_region
+    if jwt_region in REGION_ALIASES:
+        return REGION_ALIASES[jwt_region]
+    return DEFAULT_REGION
 
-            serialized_data = game_data.SerializeToString()
-            encrypted = encrypt_data(serialized_data)
-            hex_encrypted = binascii.hexlify(encrypted).decode('utf-8')
-            
-            edata = bytes.fromhex(hex_encrypted)
-            response = requests.post(major_login_url, data=edata, headers=LOGIN_HEADERS, verify=False, timeout=10)
-
-            if response.status_code == 200:
-                data_dict = None
-                try:
-                    example_msg = output_pb2.Garena_420()
-                    example_msg.ParseFromString(response.content)
-                    data_dict = {field.name: getattr(example_msg, field.name) 
-                                 for field in example_msg.DESCRIPTOR.fields 
-                                 if field.name == "token"}
-                except Exception:
-                    pass
-                if data_dict and "token" in data_dict:
-                    jwt_token = data_dict["token"]
-                    print(f"[MAJOR LOGIN] Platform {platform_type} SUCCESS!")
-                    return jwt_token
-                else:
-                    print(f"[MAJOR LOGIN] Platform {platform_type} - No token in response")
-            else:
-                print(f"[MAJOR LOGIN] Platform {platform_type} - Status: {response.status_code}")
-        except Exception as e:
-            print(f"[MAJOR LOGIN] Platform {platform_type} error: {e}")
-            continue
-    return None
-
-# ============== GUEST LOGIN ==============
-def perform_guest_login(uid, password):
-    payload = {
-        'uid': uid,
-        'password': password,
-        'response_type': "token",
-        'client_type': "2",
-        'client_secret': "2ee44819e9b4598845141067b281621874d0d5d7af9d8f7e00c1e54715b7d1e3",
-        'client_id': "100067"
-    }
-    headers = {
-        'User-Agent': "GarenaMSDK/4.0.19P9(SM-M526B ;Android 13;pt;BR;)",
-        'Connection': "Keep-Alive"
-    }
-    try:
-        resp = requests.post(OAUTH_URL, data=payload, headers=headers, timeout=10, verify=False)
-        data = resp.json()
-        print(f"[GUEST LOGIN] Response: {data}")
-        if 'access_token' in data:
-            return data['access_token'], data.get('open_id')
-    except Exception as e:
-        print(f"[GUEST LOGIN] Error: {e}")
-    return None, None
-
-# ============== REGION UTILITIES ==============
-def _add_region_param(url: str, region: str) -> str:
+def _add_region_param(url, region):
     parts = urlparse(url)
     q = dict(parse_qsl(parts.query, keep_blank_values=True))
     q["region"] = region
     return urlunparse((parts.scheme, parts.netloc, parts.path, parts.params, urlencode(q), parts.fragment))
 
-def get_region_urls(region: str):
-    region = (region or "").upper().strip() or DEFAULT_REGION
+def get_region_urls(region):
+    region = region.upper() if region else DEFAULT_REGION
     if region not in REGION_MAP:
-        raise ValueError(f"Unsupported region: {region}")
+        region = DEFAULT_REGION
     update_url = _add_region_param(REGION_MAP[region]["update_url"], region)
-    major_url  = _add_region_param(REGION_MAP[region]["major_login_url"], region)
-    return region, update_url, major_url
+    return region, update_url
 
-# ============== BIO UPLOAD ==============
 def upload_bio_request(jwt_token, bio_text, update_url):
     try:
         data = BioData()
@@ -357,160 +311,117 @@ def upload_bio_request(jwt_token, bio_text, update_url):
         headers = BIO_HEADERS.copy()
         headers["Authorization"] = f"Bearer {jwt_token}"
 
-        resp = requests.post(update_url, headers=headers, data=encrypted, timeout=20, verify=False)
+        resp = requests.post(update_url, headers=headers, data=encrypted, verify=False)
 
-        status_text = "Unknown"
-        if resp.status_code == 200: status_text = "✅ Success"
-        elif resp.status_code == 401: status_text = "❌ Unauthorized (Invalid JWT)"
-        else: status_text = f"⚠️ Status {resp.status_code}"
-
-        raw_hex = binascii.hexlify(resp.content).decode('utf-8')
-
+        status = "✅ Success" if resp.status_code == 200 else "❌ Failed"
         return {
-            "status": status_text,
+            "status": status,
             "code": resp.status_code,
-            "bio": bio_text,
-            "server_response": raw_hex
+            "server_response": binascii.hexlify(resp.content).decode()
         }
     except Exception as e:
-        return {"status": f"Error: {str(e)}", "code": 500, "bio": bio_text, "server_response": "N/A"}
+        return {"status": str(e), "code": 500, "server_response": ""}
 
-# ============== MAIN ENDPOINT ==============
+# ==================== MAIN ROUTE ====================
+
 @app.route("/bio", methods=["GET", "POST"])
 def combined_bio_upload():
     bio = request.args.get("bio") or request.form.get("bio")
     jwt_token = request.args.get("jwt") or request.form.get("jwt")
     uid = request.args.get("uid") or request.form.get("uid")
-    password = request.args.get("pass") or request.form.get("password")
-    access_token = request.args.get("access") or request.form.get("access") or request.args.get("access_token")
-    region_in = request.args.get("region") or request.form.get("region")
-
-    print(f"[REQUEST] bio={bio}, uid={uid}, has_pass={bool(password)}, has_access={bool(access_token)}")
+    password = request.args.get("pass") or request.args.get("password") or request.form.get("pass") or request.form.get("password")
+    access_token = request.args.get("access") or request.args.get("access_token") or request.form.get("access") or request.form.get("access_token")
 
     if not bio:
-        return jsonify({"status": "❌ Error", "code": 400, "error": "Missing 'bio' parameter"}), 400
-
-    try:
-        selected_region, update_url, major_url = get_region_urls(region_in)
-        print(f"[REGION] Selected: {selected_region}, Update: {update_url}")
-    except ValueError as e:
-        return jsonify({"status": "❌ Error", "code": 400, "error": str(e)}), 400
+        return jsonify({"status": "❌ Missing bio", "error": "bio parameter required"}), 400
 
     final_jwt = None
-    login_method = "Direct JWT"
-    
-    final_open_id = None
-    final_access_token = None
-    final_uid = None
-    final_name = None
-    final_region = None
+    jwt_info = None
+    login_method = "Unknown"
 
-    # ========== DIRECT JWT ==========
+    # 1. Direct JWT
     if jwt_token:
-        print("[AUTH] Using Direct JWT")
+        login_method = "Direct JWT"
         final_jwt = jwt_token
-        j_uid, j_name, j_region = decode_jwt_with_nickname(jwt_token)
-        final_uid = j_uid
-        final_name = j_name
-        final_region = j_region
-        print(f"[AUTH] Decoded: UID={final_uid}, Name={final_name}, Region={final_region}")
-    
-    # ========== UID/PASS LOGIN ==========
-    elif uid and password:
-        print("[AUTH] Using UID/Password Login")
-        login_method = "UID/Pass Login"
-        
-        acc_token, login_openid = perform_guest_login(uid, password)
-        
-        if acc_token and login_openid:
-            print(f"[AUTH] Guest login success, OpenID: {login_openid}")
-            final_access_token = acc_token
-            final_open_id = login_openid
-            
-            final_jwt = perform_major_login(final_access_token, final_open_id, major_url)
-            
-            if final_jwt:
-                print("[AUTH] Major login success, decoding JWT...")
-                j_uid, j_name, j_region = decode_jwt_with_nickname(final_jwt)
-                final_uid = j_uid
-                final_name = j_name
-                final_region = j_region
-                print(f"[AUTH] Decoded: UID={final_uid}, Name={final_name}, Region={final_region}")
-            else:
-                print("[AUTH] Major login failed")
-                return jsonify({"status": "❌ JWT Generation Failed", "code": 500}), 500
-        else:
-            print("[AUTH] Guest login failed")
-            return jsonify({"status": "❌ Guest Login Failed (Check UID/Pass)", "code": 401}), 401
+        jwt_info = decode_jwt_full(final_jwt)
+        print(f"[Direct JWT] Using provided JWT")
 
-    # ========== ACCESS TOKEN LOGIN (APP.PY STYLE) ==========
-    elif access_token:
-        print("[AUTH] Using Access Token Login (app.py style)")
-        login_method = "Access Token Login"
-        final_access_token = access_token
-        
-        # PRIMARY: Token inspect (app.py logic)
-        open_id, is_valid = validate_and_get_openid_from_token(access_token)
-        
-        if not is_valid:
-            print("[AUTH] Token inspect failed, trying reward API fallback...")
-            # FALLBACK: Reward API
-            f_uid, f_name, f_region = get_name_region_from_reward(access_token)
-            if f_uid:
-                final_uid = f_uid
-                final_name = f_name
-                final_region = f_region
-                # Shop2Game se open_id
-                open_id = get_openid_from_shop2game(f_uid)
-                print(f"[AUTH] Shop2Game OpenID: {open_id}")
-            else:
-                return jsonify({
-                    "status": "❌ Invalid Access Token", 
-                    "code": 400, 
-                    "error": "Token validation failed. Both inspect and reward API failed."
-                }), 400
-        else:
-            # Inspect success - Reward API se UID/Name lete hain
-            f_uid, f_name, f_region = get_name_region_from_reward(access_token)
-            final_uid = f_uid
-            final_name = f_name
-            final_region = f_region
-            print(f"[AUTH] Reward API: UID={final_uid}, Name={final_name}, Region={final_region}")
-        
-        if not open_id:
-            return jsonify({"status": "❌ OpenID Fetch Failed", "code": 400}), 400
-        
-        # Major Login
-        final_open_id = open_id
-        final_jwt = perform_major_login(final_access_token, final_open_id, major_url)
+    # 2. UID + Password (Using API)
+    elif uid and password:
+        login_method = "UID/Pass via API"
+        print(f"[UID/Pass] Attempting login for UID: {uid}")
+        final_jwt, account_uid, name, region = get_jwt_from_uid_password_api(uid, password)
         
         if final_jwt:
-            print("[AUTH] Major login success, decoding JWT...")
-            j_uid, j_name, j_region = decode_jwt_with_nickname(final_jwt)
-            final_uid = j_uid
-            final_name = j_name
-            final_region = j_region
-            print(f"[AUTH] Decoded: UID={final_uid}, Name={final_name}, Region={final_region}")
+            jwt_info = {
+                "uid": account_uid,
+                "name": name,
+                "region": region
+            }
+            print(f"[UID/Pass] Successfully obtained JWT")
         else:
-            return jsonify({"status": "❌ Major Login Failed", "code": 500}), 500
-    
+            print(f"[UID/Pass] Failed to get JWT")
+            return jsonify({
+                "status": "❌ Authentication Failed",
+                "error": "Invalid UID/Password or API error",
+                "login_method": login_method
+            }), 401
+
+    # 3. Access Token -> JWT (Major Login)
+    elif access_token:
+        login_method = "Access Token -> JWT (Major Login)"
+        print(f"[Access Token] Attempting conversion")
+        final_jwt, account_uid, region = get_jwt_from_access_token(access_token)
+        
+        if final_jwt:
+            jwt_info = decode_jwt_full(final_jwt)
+            if not jwt_info:
+                jwt_info = {"uid": account_uid, "region": region}
+            print(f"[Access Token] Successfully obtained JWT")
+        else:
+            print(f"[Access Token] Failed to convert")
+            return jsonify({
+                "status": "❌ Access Token Conversion Failed",
+                "error": "Could not convert access token to JWT",
+                "login_method": login_method
+            }), 401
+
     else:
-        return jsonify({"status": "❌ Error", "code": 400, "error": "Provide JWT, or UID/Pass, or Access Token"}), 400
+        return jsonify({
+            "status": "❌ Missing Credentials",
+            "error": "Provide JWT, UID/Pass, or Access Token",
+            "example": {
+                "with_uid_pass": "/bio?bio=Hello&uid=123456789&pass=yourpassword",
+                "with_jwt": "/bio?bio=Hello&jwt=your_jwt_token",
+                "with_access": "/bio?bio=Hello&access=your_access_token"
+            }
+        }), 400
 
     if not final_jwt:
-        return jsonify({"status": "❌ JWT Generation Failed", "code": 500}), 500
+        return jsonify({"status": "❌ JWT Generation Failed", "error": "Could not generate valid JWT"}), 500
 
+    # Upload bio
+    jwt_region = jwt_info.get("region") if jwt_info else DEFAULT_REGION
+    mapped_region = map_region(jwt_region)
+    _, update_url = get_region_urls(mapped_region)
     result = upload_bio_request(final_jwt, bio, update_url)
-    
+
     response_data = {
-        "status": result["status"],
+        "success": result["status"] == "✅ Success",
         "login_method": login_method,
-        "code": result["code"],
-        "bio": result["bio"],
-        "uid": str(final_uid) if final_uid else None,
-        "name": final_name,
-        "region": final_region
+        "status": result["status"],
+        "http_code": result["code"],
+        "bio": bio,
+        "uid": jwt_info.get("uid") if jwt_info else None,
+        "name": jwt_info.get("name") if jwt_info else None,
+        "region_detected": jwt_region,
+        "region_used": mapped_region,
+        "generated_jwt": final_jwt[:50] + "..." if final_jwt and len(final_jwt) > 50 else final_jwt,
+        "server_response": result["server_response"][:200] if result["server_response"] else "Empty"
     }
+
+    return jsonify(response_data)
+
 @app.route("/", methods=["GET"])
 def home():
     return jsonify({
@@ -534,9 +445,13 @@ def home():
         }
     })
 
-    response = make_response(jsonify(response_data))
-    response.headers["Content-Type"] = "application/json"
-    return response
-
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5000, debug=True)
+    print("=" * 50)
+    print("FreeFire Bio Upload API Started")
+    print("=" * 50)
+    print("Available endpoints:")
+    print("  GET  / - API Info")
+    print("  POST /bio - Upload bio")
+    print("  GET  /bio?bio=text&uid=xxx&pass=xxx - Upload bio")
+    print("=" * 50)
+    app.run(host="0.0.0.0", port=5000, debug=True)
