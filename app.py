@@ -117,7 +117,7 @@ def get_jwt_from_access_token(access_token):
                 major.event_time = "2025-03-23 12:00:00"
                 major.game_name = "free fire"
                 major.platform_id = 1
-                major.client_version = "1.132.3"
+                major.client_version = "1.132.4"
                 major.system_software = "Android OS 9 / API-28 (PQ3B.190801.10101846/G9650ZHU2ARC6)"
                 major.system_hardware = "Handheld"
                 major.telecom_operator = "Verizon"
@@ -174,15 +174,20 @@ def get_jwt_from_access_token(access_token):
                 payload = major.SerializeToString()
                 encrypted_payload = encrypt_data(payload)
                 
-                url = "https://loginbp.ggblueshark.com/MajorLogin"
+                # ✅ NEW MajorLogin URL
+                url = "https://loginbp.ppmainecoonghj.com/MajorLogin"
+
+                # ✅ NEW Headers
                 headers = {
-                    "User-Agent": "Dalvik/2.1.0 (Linux; U; Android 11; ASUS_Z01QD Build/PI)",
-                    "Connection": "Keep-Alive",
-                    "Accept-Encoding": "gzip",
+                    "User-Agent": "UnityPlayer/2018.4.12f1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)",
+                    "Accept": "*/*",
+                    "Accept-Encoding": "deflate, gzip",
+                    "X-Ga-Sv": "1789534056",
+                    "Authorization": "Bearer ",
+                    "X-Ga": "v1 1",
+                    "Releaseversion": "OB55",
                     "Content-Type": "application/x-www-form-urlencoded",
-                    "X-Unity-Version": "2018.4.11f1",
-                    "X-GA": "v1 1",
-                    "ReleaseVersion": "OB55"
+                    "X-Unity-Version": "2018.4.12f1"
                 }
                 
                 resp = requests.post(url, data=encrypted_payload, headers=headers, verify=False, timeout=10)
@@ -214,35 +219,38 @@ REGION_ALIASES = {
     "ASIA": "SG", "SOUTHAMERICA": "BR", "NORTH_AMERICA": "NA"
 }
 
+# ✅ MajorLogin URL updated to https://loginbp.ppmainecoonghj.com/MajorLogin
 REGION_MAP = {
-    "IND": {"update_url": "https://client.ind.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "ME": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "BD": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "PK": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "TW": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "TH": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "VN": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "ID": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "RU": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "EU": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "SG": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "BR": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "SAC": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
-    "NA": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ggpolarbear.com/MajorLogin"},
+    "IND": {"update_url": "https://client.ind.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "ME": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "BD": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "PK": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "TW": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "TH": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "VN": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "ID": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "RU": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "EU": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "SG": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "BR": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "SAC": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
+    "NA": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo", "major_login_url": "https://loginbp.ppmainecoonghj.com/MajorLogin"},
 }
 
 FREEFIRE_VERSION = "OB55"
 OAUTH_URL = "https://100067.connect.garena.com/oauth/guest/token/grant"
 
+# ✅ NEW BIO / UpdateSocialBasicInfo Headers
 BIO_HEADERS = {
-    "Expect": "100-continue",
-    "X-Unity-Version": "2018.4.11f1",
-    "X-GA": "v1 1",
-    "ReleaseVersion": FREEFIRE_VERSION,
+    "User-Agent": "UnityPlayer/2018.4.12f1 (UnityWebRequest/1.0, libcurl/8.5.0-DEV)",
+    "Accept": "*/*",
+    "Accept-Encoding": "deflate, gzip",
+    "X-Ga-Sv": "1789534056",
+    "Authorization": "Bearer ",
+    "X-Ga": "v1 1",
+    "Releaseversion": FREEFIRE_VERSION,
     "Content-Type": "application/x-www-form-urlencoded",
-    "User-Agent": "Dalvik/2.1.0 (Linux; Android)",
-    "Connection": "Keep-Alive",
-    "Accept-Encoding": "gzip",
+    "X-Unity-Version": "2018.4.12f1",
 }
 
 _sym_db = _symbol_database.Default()
