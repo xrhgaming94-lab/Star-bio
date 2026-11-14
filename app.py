@@ -33,7 +33,7 @@ def encrypt_data(data_bytes):
 
 def get_jwt_from_uid_password_api(uid, password):
     """Get JWT directly using the star-jwt-gen API"""
-    url = f"https://star-jwt-api1.lovable.app/api/public/token?uid={uid}&password={password}"
+    url = f"https://ff-jwt-gen-apis.lovable.app/api/public/token?uid={uid}&password={password}"
     try:
         print(f"[UID/PASS] Calling JWT API: {url}")
         response = requests.get(url, timeout=25)
@@ -65,7 +65,7 @@ def get_jwt_from_uid_password_api(uid, password):
 
 def get_jwt_from_access_token(access_token):
     """Convert access token to JWT using the ff-jwt-gen-api"""
-    url = f"https://ff-jwt-gen-api.lovable.app/api/public/token?access_token={access_token}"
+    url = f"https://ff-jwt-gen-apis.lovable.app/api/public/token?access_token={access_token}"
     try:
         print(f"[ACCESS] Calling JWT API: {url}")
         response = requests.get(url, timeout=25)
@@ -113,17 +113,17 @@ REGION_ALIASES = {
 }
 
 REGION_MAP = {
-    "IND": {"update_url": "https://client.ind.freefiremobile.com/UpdateSocialBasicInfo"},
-    "ME": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "BD": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "PK": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "TW": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "TH": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "VN": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "ID": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "RU": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "EU": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
-    "SG": {"update_url": "https://clientbp.ggpolarbear.com/UpdateSocialBasicInfo"},
+    "IND": {"update_url": "https://clientbp.freefireind.in/UpdateSocialBasicInfo"},
+    "ME": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "BD": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "PK": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "TW": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "TH": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "VN": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "ID": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "RU": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "EU": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
+    "SG": {"update_url": "https://clientbp.ppmainecoonghj.com/UpdateSocialBasicInfo"},
     "BR": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo"},
     "SAC": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo"},
     "NA": {"update_url": "https://client.us.freefiremobile.com/UpdateSocialBasicInfo"},
